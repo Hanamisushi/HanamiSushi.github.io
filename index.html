@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+
+    <header>
+
+        <div class="logo-container">
+            <img class="logo-1" src="images/hanamiletras.svg" alt="Hanami">
+        </div>
+        <nav class="navbar"></nav>
+
+        <div class="social-icons">
+            <a href="https://www.facebook.com/share/17rGmsfXb4/?mibextid=qi2Omg" target="_blank">
+                <img src="images/s1.svg" alt="red social 1">
+            </a>
+            <a href="https://wa.me/qr/XGH4527HXJJDI1" target="_blank">
+                <img src="images/s2.svg" alt="red social 2">
+            </a>
+            <a href="https://www.instagram.com/erik.garcia_h/profilecard/?igsh=bnZkNm9paGVmajlm" target="_blank">
+                <img src="images/s3.svg" alt="red social 3">
+            </a>
+        </div>    
+    </header>
+
+
+        <!-- Botón flotante con imagen personalizada de delivery -->
+       <button class="floating-btn" onclick="showOrderSummary()">
+       <img src="images/iconodelivery.svg" alt="Delivery" class="delivery-icon">
+       </button>
+
+
+
+
+    
+        <div class="menu-container"> 
+            <img class="menu-1" src="images/menu.svg" alt="menu">
+        </div>
+           
+
+    <!-- Modal de resumen de compra -->
+<div id="order-summary" class="modal">
+    <h3>Resumen de Compra</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody id="order-summary-body"></tbody>
+    </table>
+    <h4>Total: <span id="order-total"></span></h4>
+
+    <!-- Botones de opciones -->
+    <div class="button-container">
+        <button class="action-btn" onclick="openDeliveryForm()">Servicio a domicilio</button>
+        <button type="button" class="action-btn" onclick="openPickupModal()">Recoger en restaurante</button>
+    </div>
+
+    <button class="close-btn" onclick="closeOrderSummary()">×</button>
+    <p class="delivery-notice">* Costos por envio a domicilio: 
+        <br>1pz / $15
+        <br>2 o mas / $30 </p>
+    
+
+
+</div>
+
+    
+
+<!-- Modal de formulario para Servicio a Domicilio -->
+<div id="delivery-modal" class="modal">
+    <h3>Datos para Servicio a Domicilio</h3>
+    <form id="delivery-form">
+        <label for="delivery-name">Nombre:</label>
+        <input type="text" id="delivery-name" placeholder="Tu nombre" required>
+
+        <label for="delivery-address">Dirección:</label>
+        <input type="text" id="delivery-address" placeholder="Tu dirección" required>
+
+        <label for="delivery-references">Referencias:</label>
+        <textarea id="delivery-references" placeholder="Detalles para la entrega" required></textarea>
+    </form>
+
+    <p class="delivery-notice">Al confirmar su orden, mandar su ubicación mediante Whatsapp.</p>
+
+    <!-- Botones de pago -->
+    <div class="payment-methods">
+    <button type="button" class="action-btn" onclick="selectPaymentMethod('transferencia')">Transferencia</button>
+    <button type="button" class="action-btn" onclick="openCashPaymentModal()">Efectivo</button>
+</div>
+
+    <!-- Botón X para cerrar el formulario -->
+    <button class="close-btn" onclick="closeDeliveryForm()">×</button>
+</div>
+
+
+
+<!-- Modal para datos bancarios -->
+<div id="bank-transfer-modal" class="modal">
+    <h3>Datos Bancarios</h3>
+    <p><strong>Nombre:</strong> Erik Garcia</p>
+    <p><strong>Número de cuenta:</strong> 73826438720233</p>
+    <p><strong>Banco:</strong> BBVA</p>
+
+    <!-- Nueva sección para mostrar el total -->
+    <div class="payment-summary">
+        <p><strong>Costo extra por envío:</strong> $0</p>
+        <p><strong>Total a pagar:</strong> <span id="bank-payment-total">$0</span></p>
+    </div>
+
+    <div class="button-container">
+        <button type="button" class="action-btn" onclick="confirmBankTransfer()">Confirmar Pedido</button>
+        <button type="button" class="close-btn" onclick="closeBankTransferModal()">×</button>
+    </div>
+</div>
+
+
+
+<!-- Modal para pago en Efectivo -->
+<div id="cash-payment-modal" class="modal">
+    <h3>Pago en Efectivo</h3>
+    <p><strong>Total a pagar:</strong> <span id="cash-payment-total">$0</span></p>
+
+    <!-- Formulario para ingresar la cantidad del billete -->
+    <form id="cash-form">
+        <label for="cash-bill">Cantidad del billete con el que pagas:</label>
+        <input type="number" id="cash-bill" placeholder="Cantidad del billete" required>
+    </form>
+
+    <div class="button-container">
+        <button type="button" class="action-btn" onclick="confirmCashPayment()">Confirmar Pago</button>
+        <button type="button" class="close-btn" onclick="closeCashPaymentModal()">×</button>
+    </div>
+</div>
+
+    
+   <!-- Slider Menu Prodcutos -->
+
+    <section>
+    <main class="products">
+        <div class="tabs container">
+
+            <input type="radio" name="tabs" id="tab1" checked="checked" class="tabInput" value="1">
+            <label for="tab1">SUSHI FRIO</label>
+
+
+            <div class="tab">
+                <div class="swiper mySwiper-1" id="swiper1">
+
+
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food1.png" alt="California roll">
+                                </div>
+                                <div class="product-txt">
+                                   <h4>California Roll</h4>
+                                   <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+
+
+                            <div style="text-align: center;">
+                            <button class="button2" data-id="california-roll" 
+                            data-name="California Roll" 
+                            data-price="80" 
+                            onclick="openModal('california-roll')">
+                            Ordenar
+                            </button>
+                        </div>
+
+                        </div>
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food2.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-1</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                        
+
+                        <div style="text-align: center;">
+                            <button class="button2" data-id="SH-1" 
+                            data-name="SH-1" 
+                            data-price="80" 
+                            onclick="openModal('SH-1')">
+                            Ordenar
+                            </button>
+                        </div>
+                        </div>
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food3.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-2</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-2" 
+                                data-name="SH-2" 
+                                data-price="80" 
+                                onclick="openModal('SH-2')">
+                                Ordenar
+                                </button>
+                            </div>
+                            </div>
+    
+
+
+
+                    </div>
+
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+
+            <input type="radio" name="tabs" id="tab2" checked="checked" class="tabInput" value="2">
+            <label for="tab2">SUSHI TEMPURA</label>
+
+
+            <div class="tab">
+                <div class="swiper mySwiper-2" id="swiper2">
+
+
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food4.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-3</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-3" 
+                                data-name="SH-3" 
+                                data-price="80" 
+                                onclick="openModal('SH-3')">
+                                Ordenar
+                                </button>
+                            </div>
+                            </div>
+    
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food5.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-4</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-4" 
+                                data-name="SH-4" 
+                                data-price="80" 
+                                onclick="openModal('SH-4')">
+                                Ordenar
+                                </button>
+                            </div>
+                            </div>
+    
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food6.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-5</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-5" 
+                                data-name="SH-5" 
+                                data-price="80" 
+                                onclick="openModal('SH-5')">
+                                Ordenar
+                                </button>
+                            </div>
+                            </div>
+    
+
+
+
+                    </div>
+
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+
+            <input type="radio" name="tabs" id="tab3" checked="checked" class="tabInput" value="3">
+            <label for="tab3">YAKITORIS</label>
+
+
+            <div class="tab">
+                <div class="swiper mySwiper-3" id="swiper3">
+
+
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food7.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-6</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-6" 
+                                data-name="SH-6" 
+                                data-price="80" 
+                                onclick="openModal('SH-6')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food8.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-7</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-7" 
+                                data-name="SH-7" 
+                                data-price="80" 
+                                onclick="openModal('SH-7')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food9.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-8</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-8" 
+                                data-name="SH-8" 
+                                data-price="80" 
+                                onclick="openModal('SH-8')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+
+
+
+            <input type="radio" name="tabs" id="tab4" checked="checked" class="tabInput" value="4">
+            <label for="tab4">EDAMANES ASADOS</label>
+
+
+            <div class="tab">
+                <div class="swiper mySwiper-3" id="swiper4">
+
+
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food7.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-9</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-9" 
+                                data-name="SH-9" 
+                                data-price="80" 
+                                onclick="openModal('SH-9')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food8.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-10</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-10" 
+                                data-name="SH-10" 
+                                data-price="80" 
+                                onclick="openModal('SH-10')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food9.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-11</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-11" 
+                                data-name="SH-11" 
+                                data-price="80" 
+                                onclick="openModal('SH-11')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+
+
+
+
+
+            <input type="radio" name="tabs" id="tab5" checked="checked" class="tabInput" value="5">
+            <label for="tab5">KUSHIAGES</label>
+
+
+            <div class="tab">
+                <div class="swiper mySwiper-3" id="swiper5">
+
+
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food7.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-12</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-12" 
+                                data-name="SH-12" 
+                                data-price="80" 
+                                onclick="openModal('SH-12')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food8.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-13</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-13" 
+                                data-name="SH-13" 
+                                data-price="80" 
+                                onclick="openModal('SH-13')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food9.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-14</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-14" 
+                                data-name="SH-14" 
+                                data-price="80" 
+                                onclick="openModal('SH-14')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+
+
+            <input type="radio" name="tabs" id="tab6" checked="checked" class="tabInput" value="6">
+            <label for="tab6">POKE´S</label>
+
+
+            <div class="tab">
+                <div class="swiper mySwiper-3" id="swiper6">
+
+
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food7.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-15</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-15" 
+                                data-name="SH-15" 
+                                data-price="80" 
+                                onclick="openModal('SH-15')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food8.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-16</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-16" 
+                                data-name="SH-16" 
+                                data-price="80" 
+                                onclick="openModal('SH-16')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food9.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-17</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-17" 
+                                data-name="SH-17" 
+                                data-price="80" 
+                                onclick="openModal('SH-17')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+
+
+
+
+            <input type="radio" name="tabs" id="tab7" checked="checked" class="tabInput" value="7">
+            <label for="tab7">YAKIMESHI</label>
+
+
+            <div class="tab">
+                <div class="swiper mySwiper-3" id="swiper7">
+
+
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food7.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-18</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-18" 
+                                data-name="SH-18" 
+                                data-price="80" 
+                                onclick="openModal('SH-18')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food8.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-19</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-19" 
+                                data-name="SH-19" 
+                                data-price="80" 
+                                onclick="openModal('SH-19')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food9.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-20</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-20" 
+                                data-name="SH-20" 
+                                data-price="80" 
+                                onclick="openModal('SH-20')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+
+
+
+
+
+
+            <input type="radio" name="tabs" id="tab8" checked="checked" class="tabInput" value="8">
+            <label for="tab8">BORU´S</label>
+
+
+            <div class="tab">
+                <div class="swiper mySwiper-3" id="swiper8">
+
+
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food7.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-21</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-21" 
+                                data-name="SH-21" 
+                                data-price="80" 
+                                onclick="openModal('SH-21')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food8.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-22</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-22" 
+                                data-name="SH-22" 
+                                data-price="80" 
+                                onclick="openModal('SH-22')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food9.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-23</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-23" 
+                                data-name="SH-23" 
+                                data-price="80" 
+                                onclick="openModal('SH-23')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+
+
+
+
+            <input type="radio" name="tabs" id="tab9" checked="checked" class="tabInput" value="9">
+            <label for="tab9">TEPPANYAKIS</label>
+
+
+            <div class="tab">
+                <div class="swiper mySwiper-3" id="swiper9">
+
+
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food7.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-24</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-24" 
+                                data-name="SH-24" 
+                                data-price="80" 
+                                onclick="openModal('SH-24')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food8.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-25</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-25" 
+                                data-name="SH-25" 
+                                data-price="80" 
+                                onclick="openModal('SH-25')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food9.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-26</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-26" 
+                                data-name="SH-26" 
+                                data-price="80" 
+                                onclick="openModal('SH-26')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+
+
+            <input type="radio" name="tabs" id="tab10" checked="checked" class="tabInput" value="10">
+            <label for="tab10">RAMEN</label>
+
+
+            <div class="tab">
+                <div class="swiper mySwiper-3" id="swiper10">
+
+
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food7.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-27</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-27" 
+                                data-name="SH-27" 
+                                data-price="80" 
+                                onclick="openModal('SH-27')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food8.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-28</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-28" 
+                                data-name="SH-28" 
+                                data-price="80" 
+                                onclick="openModal('SH-28')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food9.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-29</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-29" 
+                                data-name="SH-29" 
+                                data-price="80" 
+                                onclick="openModal('SH-29')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+
+            <input type="radio" name="tabs" id="tab11" checked="checked" class="tabInput" value="11">
+            <label for="tab11">SOPA MISO</label>
+
+
+            <div class="tab">
+                <div class="swiper mySwiper-3" id="swiper11">
+
+
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food7.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-30</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-30" 
+                                data-name="SH-30" 
+                                data-price="80" 
+                                onclick="openModal('SH-30')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food8.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-31</h4>
+
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-31" 
+                                data-name="SH-31" 
+                                data-price="80" 
+                                onclick="openModal('SH-31')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food9.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-32</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-32" 
+                                data-name="SH-32" 
+                                data-price="80" 
+                                onclick="openModal('SH-32')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+
+
+
+
+
+            <input type="radio" name="tabs" id="tab12" checked="checked" class="tabInput" value="12">
+            <label for="tab12">BEBIDAS</label>
+
+
+            <div class="tab">
+                <div class="swiper mySwiper-3" id="swiper12">
+
+
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food7.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-32</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-32" 
+                                data-name="SH-32" 
+                                data-price="80" 
+                                onclick="openModal('SH-32')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food8.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-33</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-33" 
+                                data-name="SH-33" 
+                                data-price="80" 
+                                onclick="openModal('SH-33')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <h4>Nuevo</h4>
+                                    <img src="images/food9.png" alt="">
+                                </div>
+                                <div class="product-txt">
+                                    <h4>SH-34</h4>
+                                    <p>calidad premiun</p>
+                                    <span class="price">$80.00</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="button2" data-id="SH-34" 
+                                data-name="SH-34" 
+                                data-price="80" 
+                                onclick="openModal('SH-34')">
+                                Ordenar
+                                </button>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <div class="menu-container"> 
+            <img class="menu-1" src="images/promociones.svg" alt="menu">
+        </div>
+
+
+        <section class="promotions">
+            <div class="promotions-container">
+                <!-- Primera promoción -->
+                <div class="promotion-horizontal">
+                    <img src="images/promocion-horizontal1.svg" alt="Promoción 1">
+                    <button class="promo-btn" onclick="showPromotionDetails('promo1')">Más información</button>
+                </div>
+        
+                <!-- Segunda promoción -->
+                <div class="promotion-horizontal">
+                    <img src="images/promocion-horizontal2.svg" alt="Promoción 2">
+                    <button class="promo-btn" onclick="showPromotionDetails('promo2')">Más información</button>
+                </div>
+            </div>
+        
+            <!-- Modal para mostrar los detalles de la promoción -->
+            <div id="promo-modal" class="modal">
+                <div class="modal-content">
+                    <button class="close-btn" onclick="closePromoModal()">×</button>
+                    <h3 id="promo-title">Título de la Promoción</h3>
+                    <p id="promo-description">Descripción detallada de la promoción.</p>
+                </div>
+            </div>
+            <div id="modal-overlay" class="modal-overlay"></div>
+        </section>
+        
+        
+        
+
+
+
+
+        <div class="menu-container"> 
+            <img class="menu-1" src="images/contactanos.svg" alt="menu">
+        </div>
+
+       
+
+
+
+            <section class="horario">
+                <div class="horario-info container">
+                    <div class="horario-txt">
+                        <div class="txt">
+                            
+        
+                            <h4>Horario</h4>
+                            <p>
+                                Lunes a viernes: 1:30pm - 7pm
+                            </p>
+                            <p>
+                                Sabado y Domingo: 1:30pm - 9pm
+                            </p>
+                        
+                            <h4>Telefono</h4>
+                            <p>
+                                +52 749 111 7716
+                            </p>
+                            <h4>Direccion</h4>
+                            <p>
+                                Av. Unión 77, Centro, 90200 Heroica Cdad. de Calpulalpan, Tlax., México
+                            </p>
+                        </div>
+        
+        
+                    </div>
+        
+                </div>
+        
+            </section>
+
+
+
+
+            <section>
+                <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3758.833544226924!2d-98.56614612573448!3d19.591630735584765!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1cdd07c634be5%3A0x3b32a54c88476f0d!2sAv.%20Uni%C3%B3n%2077%2C%20Centro%2C%2090202%20Heroica%20Cdad.%20de%20Calpulalpan%2C%20Tlax.!5e0!3m2!1ses-419!2smx!4v1732924476341!5m2!1ses-419!2smx" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </section>
+
+
+
+            
+            <footer class="footer">
+                <div class="footer-content">
+                    <!-- Contenedor de las imágenes alineadas horizontalmente -->
+                    <div class="footer-logos">
+                        <img src="images/logohanami.svg" alt="Logo 1" class="footer-logo">
+                        <img src="images/hanamiletras.svg" alt="Logo 2" class="footer-logo">
+                        <img src="images/logo-hanami-vertical.svg" alt="Logo 3" class="footer-logo">
+                    </div>
+                    <p>Nuestro rollo es la combinación perfecta entre sabor y experiencia. Somos un grupo empresarial 100% mexicano.</p>
+                </div>
+            </footer>
+            
+
+            <div id="order-modal" class="modal">
+                <h3>Ordenar <span id="modal-product"></span></h3>
+                <label for="modal-quantity">Cantidad:</label>
+                <input type="number" id="modal-quantity" min="1" value="1">
+                <button onclick="confirmOrder()">Confirmar</button>
+                <button onclick="closeModal()">Cancelar</button>
+            </div>
+    
+
+
+
+
+        
+<!-- Modal para Recoger en Restaurante -->
+<div id="pickup-modal" class="modal">
+    <h3>Recoger en Restaurante</h3>
+
+    <!-- Mostrar el total sin costo adicional -->
+    <p><strong>Total de la Compra:</strong> <span id="pickup-total">$0</span></p>
+
+    <!-- Formulario para ingresar datos -->
+    <form id="pickup-form">
+        <label for="pickup-name">Nombre de quien recoge:</label>
+        <input type="text" id="pickup-name" placeholder="Tu nombre" required>
+
+        <label for="pickup-time">Horario de recogida:</label>
+        <input type="time" id="pickup-time" required>
+    </form>
+
+    <!-- Botones de acción -->
+    <div class="button-container">
+        <button type="button" class="action-btn" onclick="confirmPickup()">Recoger en restaurante</button>
+        <button type="button" class="close-btn" onclick="closePickupModal()">×</button>
+    </div>
+</div>
+
+
+            
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script src="script.js" ></script>
+</body>
+
+</html>
